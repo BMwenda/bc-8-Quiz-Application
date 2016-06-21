@@ -1,4 +1,5 @@
 import json
+import os
 from question import Question
 from shutil import copyfile
 
@@ -25,7 +26,14 @@ def import_quiz(path_to_quiz):
     quiz_name = json.loads(open(path_to_quiz).read())["name"]
     copyfile(path_to_quiz, "quizzes/" + quiz_name)
 
+
+def list_quizzes():
+    """List all quizzes in the library."""
+    quiz_files = [file.replace(".json", "") for file in os.listdir("quizzes")]
+    return quiz_files
+
 # questions = load_questions("quizzes/testquiz.json")
 # for question in questions:
 #    print(question.question_text)
 #import_quiz("/home/bit_chef/Desktop/math_quiz.json")
+#print(list_quizzes())
