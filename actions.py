@@ -6,7 +6,7 @@ from shutil import copyfile
 
 def load_questions(quiz_file):
     """Load questions from a quiz file. Return a list of questions."""
-    quiz_file = "quizzes/" + quiz_file
+    quiz_file = "quizzes/" + quiz_file + ".json"
     data = open(quiz_file, "r").read()
     quiz = json.loads(data)
     questions = []
@@ -25,7 +25,7 @@ def load_questions(quiz_file):
 def import_quiz(path_to_quiz):
     """Import a quiz file to the quiz library."""
     quiz_name = json.loads(open(path_to_quiz).read())["name"]
-    copyfile(path_to_quiz, "quizzes/" + quiz_name)
+    copyfile(path_to_quiz, "quizzes/" + quiz_name + ".json")
 
 
 def list_quizzes():
@@ -36,7 +36,11 @@ def list_quizzes():
 
 def take_quiz(quiz_file):
     """Take the a quiz."""
-    questions = load_questions(quiz_file)
+    try:
+        questions = load_questions(quiz_file)
+    except IndexError:
+        print("{} does not exist on the Quiz Library".format(quiz_file))
+        return
     graded_answers = []
     for question in questions:
         print(question.to_string())
