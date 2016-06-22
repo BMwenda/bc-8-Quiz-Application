@@ -11,7 +11,7 @@ class Question(object):
 		self.answer = answer
 		self.choices = choices
 
-	def grade(self, user_answer):
+    def grade(self, user_answer):
 		if self.answer.lower() == user_answer.lower():
 			return True
-        return False
+		return False
