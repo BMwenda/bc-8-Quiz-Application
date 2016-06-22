@@ -1,15 +1,14 @@
-{"type": "multiple-choice",
-"name": "test-quiz",
+{"name": "test-quiz",
 "time_allocated":60,
 "questions":[
 	{"question_text":"What is the official currency of Japan?",
-	 "choices": [{"a":"yuan"},{"b":"yen"}, {"c":"dollar"}, {"d":"dinar"}],
+	 "choices": {"a":"yuan","b":"yen", "c":"dollar", "d":"dinar"},
 	 "answer": "b"
 	},
 
 	{
 	"question_text":"What is the official currency of Argentina?",
-	"choices":[{"a":"pesos"}, {"b":"koruna"}, {"c":"shekel"}, {"d":"franc"}],
+	"choices":{"a":"pesos", "b":"koruna", "c":"shekel", "d":"franc"},
 	"answer": "a"
 	}
 ]
