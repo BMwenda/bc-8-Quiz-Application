@@ -1,14 +1,24 @@
 import json
 import os
-from question import Question
+import time
 from shutil import copyfile
+from termcolor import cprint
+from pyfiglet import figlet_format
+
+from question import Question
 
 
-def load_questions(quiz_file):
-    """Load questions from a quiz file. Return a list of questions."""
+def load_quiz_info(quiz_file):
+    """
+    Load information from a quiz file.
+
+    Return a tuple containing a list of questions and
+    the time allocated for the quiz.
+    """
     quiz_file = "quizzes/" + quiz_file + ".json"
     data = open(quiz_file, "r").read()
     quiz = json.loads(data)
+    time_allocated = int(quiz["time_allocated"])
     questions = []
     for question in quiz["questions"]:
         text = question["question_text"]
@@ -19,7 +29,7 @@ def load_questions(quiz_file):
         except KeyError:
             choices = None
         questions.append(Question(text, answer, choices))
-    return questions
+    return {"time_allocated": time_allocated, "questions": questions}
 
 
 def import_quiz(path_to_quiz):
@@ -30,29 +40,79 @@ def import_quiz(path_to_quiz):
 
 def list_quizzes():
     """List all quizzes in the library."""
-    quiz_files = [file.replace(".json", "") for file in os.listdir("quizzes")]
-    return quiz_files
+    try:
+        quiz_files = [file.replace(".json", "") for file in os.listdir("quizzes")]
+        return quiz_files
+    except FileNotFoundError:
+        os.mkdir()
+        return []   # return empty list since no quizzes are available
 
 
 def take_quiz(quiz_file):
     """Take the a quiz."""
     try:
-        questions = load_questions(quiz_file)
-    except IndexError:
+        if quiz_file == "":
+            print("You did not specify the quiz you want to take\n\
+                To see the available quizzes, use the 'listquizzes command.")
+            return
+        quiz_info = load_quiz_info(quiz_file)
+    except FileNotFoundError:
         print("{} does not exist on the Quiz Library".format(quiz_file))
         return
+
+    questions = quiz_info["questions"]
+    time_allocated = quiz_info["time_allocated"]
     graded_answers = []
+
+    print("Time allocated for the quiz: {}".format(time_allocated))
+    input("Press Enter to start the quiz. ")
+    start_time = time.time()
+
     for question in questions:
+        if time.time() - start_time > time_allocated:
+            break
+        draw_static_screen(get_terminal_width())
         print(question.to_string())
         user_answer = input("Answer: ")
         graded_answers.append(question.grade(user_answer))
-        os.system("clear")
-    #summary
-    print("           SUMMARY")
-    print("Total questions attempted: {}".format(len(graded_answers)))
-    print("Correct attempts:   {}".format(graded_answers.count(True)))
-    print("Incorrect attempts: {}".format(graded_answers.count(False)))
 
+    time_taken = time.time() - start_time
+
+    # summary
+    print("""
+              SUMMARY
+    Total questions attempted: {a}
+    Correct attempts:          {b}
+    Incorrect attempts:        {c}
+    """.format(a=len(graded_answers),
+               b=graded_answers.count(True),
+               c=graded_answers.count(False)))
+
+
+def draw_static_screen(width):
+    """
+    Draw the top part of the terminal screen.
+
+    This part of the screen should not change whenever the
+    program is running.
+    """
+    os.system("clear")
+    cprint(" " * width, "green", "on_green", end="")
+    cprint(figlet_format("quizme", justify="center", width=width))
+    cprint("COMMANDS".center(width), attrs=["bold", "underline"])
+    cprint("listquizzes -> List all quizes in the library.")
+    cprint("onlinequiz  -> List all online quizzes")
+    cprint("takequiz    <quiz name>     Take the a particular quiz.")
+    cprint("importquiz  <path to quiz>  Import a quiz to the quiz library")
+
+
+def get_terminal_width():
+    try:
+        width = os.get_terminal_size().columns
+    except:
+        #if any error occurs when getting the screen width, just use 70 as the width
+        width = 70
+    return width
 
 #questions = load_questions("quizzes/testquiz.json")
 #for question in questions:
