@@ -1,12 +1,15 @@
 import json
 import os
 import time
+from firebase import firebase
+import requests
 from shutil import copyfile
 from termcolor import cprint
 from pyfiglet import figlet_format
 
 from question import Question
 
+firebase = firebase.FirebaseApplication('https://quizzapp-299a2.firebaseio.com/', None)
 
 def load_quiz_info(quiz_file):
     """
@@ -88,6 +91,33 @@ def take_quiz(quiz_file):
                b=graded_answers.count(True),
                c=graded_answers.count(False)))
 
+def download_quiz(quiz_name):
+    """Download a quiz from the firebase repository."""
+    quizzes = download_quizzes()
+    desired_key = None
+    for key in quizzes.keys():
+        if quizzes[key]["name"] == quiz_name:
+            desired_key = key
+            break
+    if desired_key is None:
+        print("'{}' is not in the online repository".format(quiz_name))
+        return None
+    else:
+        return quizzes[desired_key]
+
+
+def list_online_quizzes():
+    """List all quizzes stored in the firebase repository."""
+    quizzes = download_quizzes()
+    for key in quizzes.keys():
+        print(quizzes[key]["name"])
+
+
+def download_quizzes():
+    """Download quizzes from online repository"""
+    online_quizzes = firebase.get('/quizzapp-299a2/Quizzes', None)
+    return online_quizzes
+
 
 def draw_static_screen(width):
     """
@@ -107,17 +137,10 @@ def draw_static_screen(width):
 
 
 def get_terminal_width():
+    """Return the width of the terminal"""
     try:
         width = os.get_terminal_size().columns
     except:
         #if any error occurs when getting the screen width, just use 70 as the width
         width = 70
     return width
-
-#questions = load_questions("quizzes/testquiz.json")
-#for question in questions:
-#    print(question.to_string())
-# for question in questions:
-#    print(question.question_text)
-# import_quiz("/home/bit_chef/Desktop/math_quiz.json")
-# print(list_quizzes())
