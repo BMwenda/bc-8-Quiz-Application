@@ -87,7 +87,7 @@ def take_quiz(quiz_file):
             cprint("CORRECT!".center(screen_width), "white", "on_green", attrs=["bold"])
         input("Press enter to proceed to the next question.")
 
-    time_taken = time.time() - start_time
+    score = graded_answers.count(True)/len(graded_answers) * 100
 
     # summary
     cprint("""
@@ -98,8 +98,8 @@ def take_quiz(quiz_file):
     Your score:                {d}
     """.format(a=len(graded_answers),
                b=graded_answers.count(True),
-               c=graded_answers.count(False))
-               d=int(b/a * 100))
+               c=graded_answers.count(False),
+               d=graded_answers.count(True)/len(graded_answers) * 100))
 
 
 def upload_quiz(quiz_name):

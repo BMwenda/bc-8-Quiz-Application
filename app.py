@@ -1,4 +1,6 @@
+from termcolor import cprint
 import cmd
+import time
 
 import actions
 
@@ -11,8 +13,10 @@ class QuizzApp(cmd.Cmd):
 
     def do_listquizzes(self, args):
         """List all quizes in the local library."""
+        cprint("These are the quizzes in your local library".center(self.width), "yellow", attrs=["bold", "underline"])
         for quiz in actions.list_quizzes():
-            print(quiz)
+            cprint(quiz.center(self.width), attrs=["bold"])
+            time.sleep(1)
 
     def do_importquiz(self, path_to_quiz):
         """Import a quiz to the local library."""
