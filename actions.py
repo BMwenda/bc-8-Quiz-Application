@@ -67,32 +67,60 @@ def take_quiz(quiz_file):
     time_allocated = quiz_info["time_allocated"]
     graded_answers = []
 
-    print("Time allocated for the quiz: {}".format(time_allocated))
-    input("Press Enter to start the quiz. ")
+    screen_width = get_terminal_width()
+    cprint((quiz_file).center(screen_width), "yellow", attrs=["bold"])
+    print("Time allocated for the quiz: {} seconds.".center(screen_width).format(time_allocated))
+    input("Press Enter to start the quiz. ".center(screen_width))
     start_time = time.time()
 
     for question in questions:
         if time.time() - start_time > time_allocated:
             break
+        cprint((quiz_file).center(screen_width), "yellow", attrs=["bold"])
         draw_static_screen(get_terminal_width())
         print(question.to_string())
         user_answer = input("Answer: ")
         graded_answers.append(question.grade(user_answer))
+        if graded_answers[-1] == False:
+            cprint("WRONG!".center(screen_width), "white", "on_red", attrs=["bold"])
+        else:
+            cprint("CORRECT!".center(screen_width), "white", "on_green", attrs=["bold"])
+        input("Press enter to proceed to the next question.")
 
     time_taken = time.time() - start_time
 
     # summary
-    print("""
+    cprint("""
               SUMMARY
     Total questions attempted: {a}
     Correct attempts:          {b}
     Incorrect attempts:        {c}
+    Your score:                {d}
     """.format(a=len(graded_answers),
                b=graded_answers.count(True),
-               c=graded_answers.count(False)))
+               c=graded_answers.count(False))
+               d=int(b/a * 100))
+
+
+def upload_quiz(quiz_name):
+    """Upload a quiz to the firebase repository."""
+    try:
+        quiz = open("quizzes/" + quiz_name + ".json", "r").read()
+    except FileNotFoundError:
+        print("Error: Quiz not found.")
+        return
+
+    try:
+        url = '/quizzapp-299a2/Quizzes'
+        firebase.post(url, json.loads(quiz))
+    except requests.exceptions.ConnectionError:
+        print("Quiz upload unsuccessful. Connection Error.")
+        return
+    print("Quiz uploaded successfully.")
+
 
 def download_quiz(quiz_name):
-    """Download a quiz from the firebase repository."""
+    """Download a quiz from the firebase repository"""
     quizzes = download_quizzes()
     desired_key = None
     for key in quizzes.keys():
@@ -101,9 +129,12 @@ def download_quiz(quiz_name):
             break
     if desired_key is None:
         print("'{}' is not in the online repository".format(quiz_name))
-        return None
+        return
     else:
-        return quizzes[desired_key]
+        out_file = open("quizzes/" + "deleteme" + ".json", "w")
+        out_file.write(json.dumps(quizzes[desired_key]))
+        out_file.close()
+    print("Quiz downloaded successfully.")
 
 
 def list_online_quizzes():
@@ -127,13 +158,16 @@ def draw_static_screen(width):
     program is running.
     """
     os.system("clear")
-    cprint(" " * width, "green", "on_green", end="")
-    cprint(figlet_format("quizme", justify="center", width=width))
+    cprint(" " * width, "green", "on_green")
+    cprint(figlet_format("quizme", justify="center", width=width), "yellow", attrs=["bold"])
     cprint("COMMANDS".center(width), attrs=["bold", "underline"])
-    cprint("listquizzes -> List all quizes in the library.")
-    cprint("onlinequiz  -> List all online quizzes")
-    cprint("takequiz    <quiz name>     Take the a particular quiz.")
-    cprint("importquiz  <path to quiz>  Import a quiz to the quiz library")
+    cprint("listquizzes    List all quizes in the library.", attrs=["bold"])
+    cprint("online_quizzes list all quizzes in the online database", attrs=["bold"])
+    cprint("takequiz    <quiz name>     Take the a particular quiz.", attrs=["bold"])
+    cprint("importquiz  <path to quiz>  Import a quiz to the quiz library.", attrs=["bold"])
+    cprint("download    <quiz name>     Download a quiz to the local library.", attrs=["bold"])
+    cprint("upload      <quiz name>     Upload a quiz to the online repository", attrs=["bold"])
+    cprint(" ".center(width), attrs=["bold", "underline"])
 
 
 def get_terminal_width():
@@ -144,3 +178,4 @@ def get_terminal_width():
         #if any error occurs when getting the screen width, just use 70 as the width
         width = 70
     return width
+

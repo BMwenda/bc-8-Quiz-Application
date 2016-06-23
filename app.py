@@ -1,12 +1,3 @@
-"""
-Usage:
-    quizme listquizzes
-    quizme importquiz <path>
-    quizme takequiz  <quizname>
-
-Options:
-    -h --help   display this message
-"""
 import cmd
 
 import actions
@@ -19,18 +10,31 @@ class QuizzApp(cmd.Cmd):
     prompt = "(quizme)"
 
     def do_listquizzes(self, args):
-        """Run the listquizzes command."""
+        """List all quizes in the local library."""
         for quiz in actions.list_quizzes():
             print(quiz)
 
-    def do_importquiz(self, args):
-        """Run the import quiz command."""
-        actions.import_quiz(args)
+    def do_importquiz(self, path_to_quiz):
+        """Import a quiz to the local library."""
+        actions.import_quiz(path_to_quiz)
 
-    def do_takequiz(self, args):
-        """Run the takequiz command."""
+    def do_takequiz(self, quiz_name):
+        """Take a quiz."""
         actions.draw_static_screen(actions.get_terminal_width())
-        actions.take_quiz(args)
+        actions.take_quiz(quiz_name)
+
+    def do_download(self, quiz_name):
+        """Download a quiz from the online repository."""
+        actions.download_quiz(quiz_name)
+
+    def do_upload(self, quiz_name):
+        """Upload a quiz to the online repository."""
+        actions.upload_quiz(quiz_name)
+
+    def do_online_quizes(self):
+        """List all quizzes in the online repository."""
+        actions.list_online_quizzes()
+
 
     #To fix. This function is not currently working
     def complete_takequiz(self, text, line, begidx, endidx): 
