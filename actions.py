@@ -37,7 +37,11 @@ def load_quiz_info(quiz_file):
 
 def import_quiz(path_to_quiz):
     """Import a quiz file to the quiz library."""
-    quiz_name = json.loads(open(path_to_quiz).read())["name"]
+    try:
+        quiz_name = json.loads(open(path_to_quiz).read())["name"]
+    except FileNotFoundError:
+        print("Invalid path supplied.")
+        return
     copyfile(path_to_quiz, "quizzes/" + quiz_name + ".json")
 
 
