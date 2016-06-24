@@ -38,20 +38,14 @@
     },
 
     {
-    "question_text":"He gave us the light bulb.",
-    "choices":{"a":"Albert Einstein", "b":"Nikola Tesla", "c":"Thomas Edison", "d":"Heinrich Hertz"},
-    "answer": "c"
-    },
-
-    {
     "question_text":"He engineered the atomic bomb.",
     "choices":{"a":"Robert Oppenheimer", "b":"Erwin Schrondinger", "c":"Thomas Edison", "d":"Heinrich Hertz"},
     "answer": "a"
     },
 
     {
-    "question_text":"He gave us the light bulb.",
-    "choices":{"a":"Albert Einstein", "b":"Nikola Tesla", "c":"Thomas Edison", "d":"Heinrich Hertz"},
+    "question_text":"This man helped found a tech. company that could be mistaken for a fruit company.",
+    "choices":{"a":"Bill Gates", "b":"Mark Zuckerberg", "c":"Steve Jobs", "d":"Jeff Bezos"},
     "answer": "c"
     },
 
