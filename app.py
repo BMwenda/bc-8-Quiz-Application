@@ -6,16 +6,15 @@ import actions
 
 class QuizzApp(cmd.Cmd):
 
-    width = actions.get_terminal_width() # get the size of the terminal
-
-    intro = actions.draw_static_screen(width)
-    prompt = "(quizme)"
+    intro = actions.draw_static_screen(actions.get_terminal_width())
+    prompt = "(quizme)> "
 
     def do_listquizzes(self, args):
         """List all quizes in the local library."""
-        cprint("These are the quizzes in your local library".center(self.width), "yellow", attrs=["bold", "underline"])
+        cprint("These are the quizzes in your local library".
+               center(actions.get_terminal_width()), "yellow", attrs=["bold", "underline"])
         for quiz in actions.list_quizzes():
-            cprint(quiz.center(self.width), attrs=["bold"])
+            cprint(quiz.center(actions.get_terminal_width()), attrs=["bold"])
             time.sleep(1)
 
     def do_importquiz(self, path_to_quiz):
@@ -35,8 +34,10 @@ class QuizzApp(cmd.Cmd):
         """Upload a quiz to the online repository."""
         actions.upload_quiz(quiz_name)
 
-    def do_online_quizes(self):
+    def do_online_quizes(self, args):
         """List all quizzes in the online repository."""
+        cprint("These are the quizzes in the online repository".
+               center(actions.get_terminal_width()), "yellow", attrs=["bold", "underline"])
         actions.list_online_quizzes()
 
 
@@ -59,4 +60,7 @@ class QuizzApp(cmd.Cmd):
 
 
 if __name__ == "__main__":
-    QuizzApp().cmdloop()
+    try:
+        QuizzApp().cmdloop()
+    except KeyboardInterrupt:
+        print("Bye!")

@@ -69,37 +69,44 @@ def take_quiz(quiz_file):
 
     screen_width = get_terminal_width()
     cprint((quiz_file).center(screen_width), "yellow", attrs=["bold"])
-    print("Time allocated for the quiz: {} seconds.".center(screen_width).format(time_allocated))
+    print("Time allocated for the quiz: {} seconds.".
+          center(screen_width).format(time_allocated))
     input("Press Enter to start the quiz. ".center(screen_width))
-    start_time = time.time()
 
+    start_time = time.time()
+    time_up = False
     for question in questions:
         if time.time() - start_time > time_allocated:
+            time_up = True
             break
-        cprint((quiz_file).center(screen_width), "yellow", attrs=["bold"])
-        draw_static_screen(get_terminal_width())
+        draw_static_screen_question_mode(quiz_file, time.time() - start_time, time_allocated)
         print(question.to_string())
         user_answer = input("Answer: ")
         graded_answers.append(question.grade(user_answer))
-        if graded_answers[-1] == False:
+        if graded_answers[-1] is False:
             cprint("WRONG!".center(screen_width), "white", "on_red", attrs=["bold"])
         else:
             cprint("CORRECT!".center(screen_width), "white", "on_green", attrs=["bold"])
         input("Press enter to proceed to the next question.")
 
-    score = graded_answers.count(True)/len(graded_answers) * 100
+    score = graded_answers.count(True) / len(questions) * 100
+
+    if time_up:
+        draw_static_screen_question_mode(None, None, None, True)
 
     # summary
     cprint("""
               SUMMARY
     Total questions attempted: {a}
-    Correct attempts:          {b}
-    Incorrect attempts:        {c}
-    Your score:                {d}
+    Total questions available: {b}
+    Correct attempts:          {c}
+    Incorrect attempts:        {d}
+    Your score:                {e}
     """.format(a=len(graded_answers),
-               b=graded_answers.count(True),
-               c=graded_answers.count(False),
-               d=graded_answers.count(True)/len(graded_answers) * 100))
+               b=len(questions),
+               c=graded_answers.count(True),
+               d=graded_answers.count(False),
+               e=score))
 
 
 def upload_quiz(quiz_name):
@@ -131,7 +138,7 @@ def download_quiz(quiz_name):
         print("'{}' is not in the online repository".format(quiz_name))
         return
     else:
-        out_file = open("quizzes/" + "deleteme" + ".json", "w")
+        out_file = open("quizzes/" + quiz_name + ".json", "w")
         out_file.write(json.dumps(quizzes[desired_key]))
         out_file.close()
     print("Quiz downloaded successfully.")
@@ -140,8 +147,11 @@ def download_quiz(quiz_name):
 def list_online_quizzes():
     """List all quizzes stored in the firebase repository."""
     quizzes = download_quizzes()
-    for key in quizzes.keys():
-        print(quizzes[key]["name"])
+    try:
+        for key in quizzes.keys():
+            cprint(quizzes[key]["name"].center(get_terminal_width()),"green", attrs=["bold"])
+    except AttributeError:
+        print("There are no quizzes in the online repository.")
 
 
 def download_quizzes():
@@ -170,6 +180,25 @@ def draw_static_screen(width):
     cprint(" ".center(width), attrs=["bold", "underline"])
 
 
+def draw_static_screen_question_mode(quiz_name, time_taken, time_allocated, time_up = False):
+    draw_static_screen(get_terminal_width())
+    if not time_up:
+        cprint((quiz_name).center(get_terminal_width()), "yellow", attrs=["bold"])
+        print("Time taken: {}/{} seconds".format(int(time_taken), time_allocated))
+        fraction_of_time_taken = time_taken / time_allocated
+        if fraction_of_time_taken > 0.8:
+            # turn progress bar red when 80% of time allocated has elapsed
+            background = "on_red"
+            font = "red"
+        else:
+            font = "yellow"
+            background = "on_yellow"
+        cprint(" " * int(fraction_of_time_taken * get_terminal_width()), font, background)
+    else:
+        cprint("Time UP!".center(get_terminal_width()), "yellow", "on_red", attrs=["bold"])
+
+
+
 def get_terminal_width():
     """Return the width of the terminal"""
     try:
@@ -178,4 +207,3 @@ def get_terminal_width():
         #if any error occurs when getting the screen width, just use 70 as the width
         width = 70
     return width
-
