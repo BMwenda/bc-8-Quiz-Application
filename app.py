@@ -6,7 +6,7 @@ import actions
 
 class QuizzApp(cmd.Cmd):
 
-    intro = actions.draw_static_screen(actions.get_terminal_width())
+    intro = actions.draw_static_screen_start_mode(actions.get_terminal_width())
     prompt = "(quizme)> "
 
     def do_listquizzes(self, args):

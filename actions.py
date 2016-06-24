@@ -197,7 +197,16 @@ def draw_static_screen_question_mode(quiz_name, time_taken, time_allocated, time
     else:
         cprint("Time UP!".center(get_terminal_width()), "yellow", "on_red", attrs=["bold"])
 
-
+def draw_static_screen_start_mode(width):
+    animation_chars = ["_", "/", "|", "\\", "-", "+"]
+    for i in range(2):
+        if i == 1:
+            animation_chars.reverse()
+        for char in animation_chars:
+            draw_static_screen(width)
+            cprint(char * width)
+            time.sleep(0.1)
+    draw_static_screen(width)
 
 def get_terminal_width():
     """Return the width of the terminal"""
