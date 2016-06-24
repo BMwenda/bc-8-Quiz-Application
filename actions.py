@@ -89,7 +89,7 @@ def take_quiz(quiz_file):
             cprint("CORRECT!".center(screen_width), "white", "on_green", attrs=["bold"])
         input("Press enter to proceed to the next question.")
 
-    score = graded_answers.count(True) / len(questions) * 100
+    score = int(graded_answers.count(True) / len(questions) * 100)
 
     if time_up:
         draw_static_screen_question_mode(None, None, None, True)
