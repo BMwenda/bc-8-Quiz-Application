@@ -1,0 +1,33 @@
+{"name": "mathquiz",
+"time_allocated":15,
+"questions":[
+    {"question_text":"The year 2100 will be a leap year.",
+     "choices": {"a":"True","b":"False"},
+     "answer": "b"
+    },
+
+    {
+    "question_text":"What is the next number in this sequence: 4, 9, 25, 49?",
+    "choices":{"a":"81", "b":"100", "c":"121", "d":"64"},
+    "answer": "c"
+    },
+
+    {
+    "question_text":"What is the next number in the sequence: 1, 3, 6, 10?",
+    "choices":{"a":"15", "b":"17", "c":"18", "d":"21"},
+    "answer": "a"
+    },
+
+    {
+    "question_text":"With a given length of string, which 2-D figure would you make with the string so as to maximize the area enclosed by the screen?",
+    "choices":{"a":"Square", "b":"Circle", "c":"Triangle", "d":"Octagon"},
+    "answer": "b"
+    },
+
+    {
+    "question_text":"What name is given to the ratio of a circle's circumference to its diameter?",
+    "choices":{"a":"Cicle Special Factor", "b":"Chord", "c":"Radius", "d":"Pi"},
+    "answer": "d"
+    }
+]
+}

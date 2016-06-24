@@ -1,0 +1,76 @@
+{"name": "peoplequiz",
+"time_allocated":30 ,
+"questions":[
+    {
+    "question_text":"Who was the first man to get to space?",
+    "choices":{"a":"Yuri Gagarin", "b":"Neil Armstrong", "c":"Mark Watney", "d":"Loice Andia"},
+    "answer": "a"
+    },
+
+    {
+    "question_text":"This African country was not colonised by anyone.",
+    "choices":{"a":"Liberia", "b":"Ghana", "c":"Burundi", "d":"Zambia"},
+    "answer": "a"
+    },
+
+    {
+    "question_text":"This man fought hard for civil rights. He also gave a famous 'dreamy' speech.",
+    "choices":{"a":"Morris Kimani", "b":"William Wilberforce", "c":"Winston Churchill", "d":"Martin Luther King Jnr."},
+    "answer": "d" 
+    },
+
+    {
+    "question_text":"He gave us the light bulb.",
+    "choices":{"a":"Albert Einstein", "b":"Nikola Tesla", "c":"Thomas Edison", "d":"Heinrich Hertz"},
+    "answer": "c"
+    },
+
+    {
+    "question_text":"Which scientist is considered to be the father of electricity.",
+    "choices":{"a":"Michael Faraday", "b":"Albert Einstein", "c":"Thomas Edison", "d":"Carl Maxwell"},
+    "answer": "a"
+    },
+
+    {
+    "question_text":"This woman on learning that her subjects were out of bread famously said: 'let them eat cake'.",
+    "choices":{"a":"Margaret Thatcher", "b":"Queen Marie Antoinette", "c":"Cleopatra", "d":"Queen Elizabeth 1"},
+    "answer": "b"
+    },
+
+    {
+    "question_text":"He gave us the light bulb.",
+    "choices":{"a":"Albert Einstein", "b":"Nikola Tesla", "c":"Thomas Edison", "d":"Heinrich Hertz"},
+    "answer": "c"
+    },
+
+    {
+    "question_text":"He engineered the atomic bomb.",
+    "choices":{"a":"Robert Oppenheimer", "b":"Erwin Schrondinger", "c":"Thomas Edison", "d":"Heinrich Hertz"},
+    "answer": "a"
+    },
+
+    {
+    "question_text":"He gave us the light bulb.",
+    "choices":{"a":"Albert Einstein", "b":"Nikola Tesla", "c":"Thomas Edison", "d":"Heinrich Hertz"},
+    "answer": "c"
+    },
+
+    {
+    "question_text":"He chaired a meeting in which Africa was divided among some European countries.",
+    "choices":{"a":"Adolf Hitler", "b":"Winston Churchill", "c":"Ronald Reagan", "d":"Otto von Bismark"},
+    "answer": "d"
+    },
+
+    {
+    "question_text":"This lady discovered a radioactive element and won the Nobel prize for it.",
+    "choices":{"a":"Marie Curie", "b":"Ada Lovelace", "c":"Mary Leaky", "d":"Maria Maria"},
+    "answer": "a"
+    },
+
+    {
+    "question_text":"They were crazy enough to think that not only birds should fly.",
+    "choices":{"a":"The Wright Brothers", "b":"Alibaba's 40 thieves", "c":"The 7 dwarves", "d":"The blind beggars."},
+    "answer": "c"
+    }
+]
+}

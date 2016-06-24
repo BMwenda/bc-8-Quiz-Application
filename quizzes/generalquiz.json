@@ -1,0 +1,33 @@
+{"name": "generalquiz",
+"time_allocated":15,
+"questions":[
+    {"question_text":"The fear of open spaces is called?",
+     "choices": {"a":"Hydrophobia","b":"Agoraphobia", "c":"Claustrophobia", "d":"Acrophobia"},
+     "answer": "b"
+    },
+
+    {
+    "question_text":"Which of the following elements has the lowest atomic number?",
+    "choices":{"a":"Mercury", "b":"Uranium", "c":"Helium", "d":"Carbon"},
+    "answer": "c"
+    },
+
+    {
+    "question_text":"Which was the first James Bond movie to star Daniel Craig?",
+    "choices":{"a":"Casino Royale", "b":"Skyfall", "c":"Die Another Day", "d":"On Her Majest's Service"},
+    "answer": "a"
+    },
+
+    {
+    "question_text":"In the Harry Potter series, which house has a snake in its flag?",
+    "choices":{"a":"Gryffindor", "b":"Slytherin", "c":"Hufflepudd", "d":"Ravenclaw"},
+    "answer": "b"
+    },
+
+    {
+    "question_text":"What is the state capital of Texas?",
+    "choices":{"a":"Miami", "b":"Madison", "c":"Boston", "d":"Austin"},
+    "answer": "d"
+    }
+]
+}
