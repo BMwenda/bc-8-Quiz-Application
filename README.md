@@ -1,2 +1,3 @@
-# bc-8-Quiz-Application
-A console-based quiz application. 
+# quizme
+# Introduction
+quizme is a quiz application that runs on the console.
