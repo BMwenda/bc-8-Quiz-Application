@@ -1,7 +1,7 @@
 # quizme
 
 # Introduction
-* quizme is a console quiz application.
+* _quizme_ is a console quiz application.
 * The application has the following features:
       * Listing all quizzes stored in the local quiz library.
       * Taking a quiz.
@@ -11,12 +11,12 @@
       * Listing all quizzes stored in the online repository.
       
 # Installation and setup.
-Note: quizme runs only in python3. It will crash if you run it with python 2.x
+Note: _quizme_ runs only in python3. It will crash if you run it with python 2.x.
 To install the quizme application, follow the following steps:
-     ** Navigate to a directory of your choice on the terminal.
-     ** Clone the application from github using this command
+* Navigate to a directory of your choice on the terminal.
+* Clone the application from github using this command
         git clone https://github.com/MoNKim/bc-8-Quiz-Application
-     * Install the required dependencies using this command:
+* Install the required dependencies using this command:
         pip install -r requirements.txt
 
 # Running the program
